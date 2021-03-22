@@ -32,7 +32,9 @@ namespace CarRent
 
             services.AddControllers();
 
-            services.AddScoped<IRentalCarRepo, RentalCarRepoMock>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IRentalCarRepo, RentalCarRepo>();
 
             services.AddSwaggerGen();
         }

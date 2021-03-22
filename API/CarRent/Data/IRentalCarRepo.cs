@@ -8,6 +8,9 @@ namespace CarRent.Data
 {
     public interface IRentalCarRepo
     {
-        RentalCar GetRentalCarById(int id);
+        RentalCar GetCarById(int id);
+        IEnumerable<RentalCar> GetCarsByBrand(string brand);
+        void AddCar(RentalCar car);
+        bool SaveChanges();
     }
 }

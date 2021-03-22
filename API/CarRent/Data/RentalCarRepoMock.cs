@@ -15,5 +15,25 @@ namespace CarRent.Data
         {
             return rentalCars.FirstOrDefault(c=>c.Id == id);
         }
+
+        public IEnumerable<RentalCar> GetCarsByBrand(string brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        RentalCar IRentalCarRepo.GetCarById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCar(RentalCar car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

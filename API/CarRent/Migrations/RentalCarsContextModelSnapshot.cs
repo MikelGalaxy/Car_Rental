@@ -46,6 +46,10 @@ namespace CarRent.Migrations
                     b.Property<int>("ProductionYear")
                         .HasColumnType("int");
 
+                    b.Property<string>("VinNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("RentalCars");
