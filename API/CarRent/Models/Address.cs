@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace CarRent.Models
 {
-    //TO DO: 'required' anotations doesn't work with owned need to add them in FLUENT API
     [Owned]
     public class Address
     {

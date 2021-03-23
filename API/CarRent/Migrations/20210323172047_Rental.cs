@@ -11,7 +11,7 @@ namespace CarRent.Migrations
                 table: "RentalCars",
                 type: "int",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "Rentals",
