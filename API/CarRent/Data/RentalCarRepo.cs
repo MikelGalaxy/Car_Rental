@@ -39,5 +39,11 @@ namespace CarRent.Data
         {
             return (_context.SaveChanges() > 0);
         }
+
+        public bool UpdateCar(RentalCar car)
+        {
+            //EF handle it
+            return true;
+        }
     }
 }

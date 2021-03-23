@@ -12,5 +12,6 @@ namespace CarRent.Data
         IEnumerable<RentalCar> GetCarsByBrand(string brand);
         void AddCar(RentalCar car);
         bool SaveChanges();
+        bool UpdateCar(RentalCar car);
     }
 }

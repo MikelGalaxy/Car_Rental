@@ -51,9 +51,9 @@ namespace CarRent.Controllers
             return NotFound();
         }
 
-        //POST api/cars/
+        //POST api/v1/cars/
         [HttpPost]
-        public ActionResult<ReadRentalCarDto> AddCar(AddRentalCarDto addRentalCarDto)
+        public ActionResult<ReadRentalCarDto> AddCar(CreateRentalCarDto addRentalCarDto)
         {
             var rentalCar = _mapper.Map<RentalCar>(addRentalCarDto);
 
@@ -68,6 +68,26 @@ namespace CarRent.Controllers
             }
 
             return BadRequest();
+        }
+
+        //PUT api/v1/cars/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdateCar(int id, UpdateRentalCarDto updateRentalCarDto)
+        {
+            var car = _repository.GetCarById(id);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(updateRentalCarDto, car);
+
+            _repository.UpdateCar(car);
+
+            _repository.SaveChanges();
+
+            return Ok();
         }
     }
 }

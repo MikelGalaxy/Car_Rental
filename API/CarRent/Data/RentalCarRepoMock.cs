@@ -35,5 +35,10 @@ namespace CarRent.Data
         {
             throw new NotImplementedException();
         }
+
+        public bool UpdateCar(RentalCar car)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

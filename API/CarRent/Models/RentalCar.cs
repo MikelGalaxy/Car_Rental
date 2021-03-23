@@ -25,5 +25,7 @@ namespace CarRent.Models
         [Required]
         public float BaseRentCost { get; set; }
 
+        public int RentalId { get; set; }
+        public Rental Rental { get; set; }
     }
 }

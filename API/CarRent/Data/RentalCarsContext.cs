@@ -10,6 +10,9 @@ namespace CarRent.Data
 
         }
 
+        public DbSet<Rental> Rentals { get; set; }
+
+
         public DbSet<RentalCar> RentalCars { get; set; }
 
     }
