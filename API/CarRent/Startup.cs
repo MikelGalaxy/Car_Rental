@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace CarRent
 {
@@ -30,7 +31,10 @@ namespace CarRent
             //context for SQL SERVER provider
             services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CarRentalConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson( n =>
+            {
+                n.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -5,6 +5,10 @@ namespace CarRent.Data
 {
     public class RentalCarsContext : DbContext
     {
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<RentalCar> RentalCars { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+
         public RentalCarsContext(DbContextOptions<RentalCarsContext> opt): base(opt)
         {
 
@@ -25,11 +29,20 @@ namespace CarRent.Data
 
                 rental.Navigation(r => r.RentalAddress).IsRequired();
                 
-            });     
+            });
+
+            modelBuilder.Entity<Customer>(customer =>
+            {
+                customer.OwnsOne(r => r.Address, ca =>
+                {
+                    ca.Property(p => p.City).IsRequired();
+                    ca.Property(p => p.Street).IsRequired();
+                    ca.Property(p => p.Number).IsRequired();
+                });
+
+                customer.Navigation(r => r.Address).IsRequired();
+
+            });
         }
-
-        public DbSet<Rental> Rentals { get; set; }
-        public DbSet<RentalCar> RentalCars { get; set; }
-
     }
 }

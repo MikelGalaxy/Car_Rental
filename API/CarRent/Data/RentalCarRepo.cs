@@ -17,12 +17,22 @@ namespace CarRent.Data
 
         public void AddCar(RentalCar car)
         {
-            if(car == null)
+            if (car == null)
             {
                 throw new ArgumentNullException(nameof(car));
             }
 
             _context.RentalCars.Add(car);
+        }
+
+        public void DeleteCar(RentalCar car)
+        {
+            if(car == null)
+            {
+                throw new ArgumentException(nameof(car));
+            }
+
+            _context.RentalCars.Remove(car);
         }
 
         public RentalCar GetCarById(int id)

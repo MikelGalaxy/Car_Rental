@@ -13,5 +13,6 @@ namespace CarRent.Data
         void AddCar(RentalCar car);
         bool SaveChanges();
         bool UpdateCar(RentalCar car);
+        void DeleteCar(RentalCar car);
     }
 }

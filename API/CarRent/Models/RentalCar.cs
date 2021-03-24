@@ -27,5 +27,8 @@ namespace CarRent.Models
 
         public int RentalId { get; set; }
         public Rental Rental { get; set; }
+
+        public int? CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

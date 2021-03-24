@@ -13,7 +13,7 @@ namespace CarRent.Data
             new RentalCar() { Id = 2, Brand = "BMW", ModelName = "M3", ProductionYear = 2002, BaseRentCost = 500 }};
         public RentalCar GetRentalCarById(int id)
         {
-            return rentalCars.FirstOrDefault(c=>c.Id == id);
+            return rentalCars.FirstOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<RentalCar> GetCarsByBrand(string brand)
@@ -37,6 +37,11 @@ namespace CarRent.Data
         }
 
         public bool UpdateCar(RentalCar car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteCar(RentalCar car)
         {
             throw new NotImplementedException();
         }

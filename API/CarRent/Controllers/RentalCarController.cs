@@ -2,6 +2,7 @@
 using CarRent.Data;
 using CarRent.Dtos;
 using CarRent.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace CarRent.Controllers
         //GET api/v1/cars/{id}
         [HttpGet("{id}", Name = "GetRentalCarById")]
         public ActionResult<ReadRentalCarDto> GetRentalCarById(int id)
-        {           
+        {
             var car = _repository.GetCarById(id);
 
             if (car != null)
@@ -34,7 +35,7 @@ namespace CarRent.Controllers
                 return Ok(_mapper.Map<ReadRentalCarDto>(car));
             }
 
-            return NotFound();       
+            return NotFound();
         }
 
         //GET api/v1/cars/brand/{brandName}
@@ -57,7 +58,7 @@ namespace CarRent.Controllers
         {
             var rentalCar = _mapper.Map<RentalCar>(addRentalCarDto);
 
-            if (rentalCar!=null)
+            if (rentalCar != null)
             {
                 _repository.AddCar(rentalCar);
                 _repository.SaveChanges();
@@ -87,7 +88,51 @@ namespace CarRent.Controllers
 
             _repository.SaveChanges();
 
-            return Ok();
+            return NoContent();
+        }
+
+        //PATCH api/v1/cars/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialCarUpdate(int id, JsonPatchDocument<UpdateRentalCarDto> patchCar)
+        {
+            var car = _repository.GetCarById(id);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            var carToPatch = _mapper.Map<UpdateRentalCarDto>(car);
+            patchCar.ApplyTo(carToPatch, ModelState);
+
+            if (!TryValidateModel(carToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(carToPatch, car);
+
+            _repository.UpdateCar(car);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        //DELETE api/v1/cars/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCar(int id)
+        {
+            var car = _repository.GetCarById(id);
+            if(car == null)
+            {
+                return NotFound();
+            }
+
+            _repository.DeleteCar(car);
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }
