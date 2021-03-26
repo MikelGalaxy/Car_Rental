@@ -39,6 +39,7 @@ namespace CarRent
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IRentalCarRepo, RentalCarRepo>();
+            services.AddScoped<ICustomerRepo, CustomerRepo>();
 
             services.AddSwaggerGen();
         }
