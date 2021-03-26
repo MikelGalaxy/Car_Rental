@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarRent.Data;
+using CarRent.Models.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,14 +34,28 @@ namespace CarRent
             //context for SQL SERVER provider
             services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CarRentalConnection")));
 
-            services.AddControllers().AddNewtonsoftJson( n =>
+            services.AddDbContext<UserAuthenticationContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("IdentityUsers")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<UserAuthenticationContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(opt =>
             {
-                n.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             });
+
+           services.AddControllers().AddNewtonsoftJson(n =>
+           {
+               n.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+           });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IRentalCarRepo, RentalCarRepo>();
+            services.AddScoped<ICustomerRepo, CustomerRepo>();
 
             services.AddSwaggerGen();
         }
