@@ -41,7 +41,6 @@ namespace CarRent.Data
                 });
 
                 customer.Navigation(r => r.Address).IsRequired();
-
             });
         }
     }

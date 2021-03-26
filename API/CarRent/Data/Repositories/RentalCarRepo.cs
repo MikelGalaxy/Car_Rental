@@ -29,7 +29,7 @@ namespace CarRent.Data
         {
             if(car == null)
             {
-                throw new ArgumentException(nameof(car));
+                throw new ArgumentNullException(nameof(car));
             }
 
             _context.RentalCars.Remove(car);
@@ -42,12 +42,17 @@ namespace CarRent.Data
 
         public IEnumerable<RentalCar> GetCarsByBrand(string brand)
         {
+            if (string.IsNullOrEmpty(brand))
+            {
+                throw new ArgumentNullException(nameof(brand));
+            }
+
             return _context.RentalCars.Where(c => c.Brand.ToLower().Equals(brand.ToLower()));
         }
 
         public bool SaveChanges()
         {
-            return (_context.SaveChanges() > 0);
+            return _context.SaveChanges() > 0;
         }
 
         public bool UpdateCar(RentalCar car)
