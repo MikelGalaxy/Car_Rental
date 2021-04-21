@@ -21,11 +21,6 @@ namespace CarRent.Data
             throw new NotImplementedException();
         }
 
-        RentalCar IRentalCarRepo.GetCarById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddCar(RentalCar car)
         {
             throw new NotImplementedException();
@@ -42,6 +37,16 @@ namespace CarRent.Data
         }
 
         public void DeleteCar(RentalCar car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RentalCar> GetCarByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<RentalCar>> GetCarsByBrandAsync(string brand)
         {
             throw new NotImplementedException();
         }

@@ -8,8 +8,8 @@ namespace CarRent.Data
 {
     public interface IRentalCarRepo
     {
-        RentalCar GetCarById(int id);
-        IEnumerable<RentalCar> GetCarsByBrand(string brand);
+        Task<RentalCar> GetCarByIdAsync(int id);
+        Task<IEnumerable<RentalCar>> GetCarsByBrandAsync(string brand);
         void AddCar(RentalCar car);
         bool SaveChanges();
         bool UpdateCar(RentalCar car);

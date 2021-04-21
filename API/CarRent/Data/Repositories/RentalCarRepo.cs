@@ -1,4 +1,5 @@
 ﻿using CarRent.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,19 +36,19 @@ namespace CarRent.Data
             _context.RentalCars.Remove(car);
         }
 
-        public RentalCar GetCarById(int id)
+        public async Task<RentalCar> GetCarByIdAsync(int id)
         {
-            return _context.RentalCars.FirstOrDefault(c => c.Id == id);
+            return await _context.RentalCars.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public IEnumerable<RentalCar> GetCarsByBrand(string brand)
+        public async Task<IEnumerable<RentalCar>> GetCarsByBrandAsync(string brand)
         {
             if (string.IsNullOrEmpty(brand))
             {
                 throw new ArgumentNullException(nameof(brand));
             }
 
-            return _context.RentalCars.Where(c => c.Brand.ToLower().Equals(brand.ToLower()));
+            return await _context.RentalCars.Where(c => c.Brand.Equals(brand)).ToListAsync();
         }
 
         public bool SaveChanges()
