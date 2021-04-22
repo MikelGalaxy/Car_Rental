@@ -12,11 +12,13 @@ namespace CarRent.Services
     {
         private readonly IRentalCarRepo _repository;
         private readonly IMapper _mapper;
+        private readonly ILoggingService _logger;
 
-        public CarService(IRentalCarRepo repo, IMapper mapper)
+        public CarService(IRentalCarRepo repo, IMapper mapper, ILoggingService logger)
         {
             _repository = repo;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ReadRentalCarDto> GetCarById(int id)
@@ -26,9 +28,11 @@ namespace CarRent.Services
             if(foundCar == null)
             {
                 //car not found
+                _logger.LoggMessage($"Car with id: {id} was not found");
                 return null;
             }
 
+            _logger.LoggMessage($"Car with id: {id} was found");
             return _mapper.Map<ReadRentalCarDto>(foundCar);
         }
 

@@ -36,6 +36,8 @@ namespace CarRent
             services.AddScoped<IRentalCarRepo, RentalCarRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
             services.AddScoped<ICarService, CarService>();
+            services.AddScoped<ILoggingService, TestLogger>();
+
 
             services.AddSwaggerGen();
         }
