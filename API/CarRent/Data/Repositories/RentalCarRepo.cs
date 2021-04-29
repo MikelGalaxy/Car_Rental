@@ -16,14 +16,14 @@ namespace CarRent.Data
             _context = context;
         }
 
-        public void AddCar(RentalCar car)
+        public async Task AddCar(RentalCar car)
         {
             if (car == null)
             {
                 throw new ArgumentNullException(nameof(car));
             }
 
-            _context.RentalCars.Add(car);
+            await _context.RentalCars.AddAsync(car);
         }
 
         public void DeleteCar(RentalCar car)
@@ -51,10 +51,12 @@ namespace CarRent.Data
             return await _context.RentalCars.Where(c => c.Brand.Equals(brand)).ToListAsync();
         }
 
-        public bool SaveChanges()
+        public async Task SaveChanges()
         {
-            return _context.SaveChanges() > 0;
+            await _context.SaveChangesAsync();
         }
+
+        
 
         public bool UpdateCar(RentalCar car)
         {

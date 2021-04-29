@@ -21,16 +21,6 @@ namespace CarRent.Data
             throw new NotImplementedException();
         }
 
-        public void AddCar(RentalCar car)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool UpdateCar(RentalCar car)
         {
             throw new NotImplementedException();
@@ -47,6 +37,16 @@ namespace CarRent.Data
         }
 
         public Task<IEnumerable<RentalCar>> GetCarsByBrandAsync(string brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRentalCarRepo.AddCar(RentalCar car)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRentalCarRepo.SaveChanges()
         {
             throw new NotImplementedException();
         }

@@ -39,7 +39,7 @@ namespace CarRent.Controllers
         public async Task<IActionResult> GetRentalCarById([FromRoute] int id)
         {
             var car = await _carService.GetCarById(id);
-            return car != null ? (IActionResult) Ok(car) : NotFound();
+            return car != null ? (IActionResult)Ok(car) : NotFound();
         }
 
         //GET api/v1/cars/brand/{brandName}
@@ -53,22 +53,16 @@ namespace CarRent.Controllers
                 return Ok(cars);
             }
 
-            return cars != null && cars.Count() > 0 ? (IActionResult) Ok(cars) : NotFound();
+            return cars != null && cars.Count() > 0 ? (IActionResult)Ok(cars) : NotFound();
         }
 
         //POST api/v1/cars/
         [HttpPost]
-        public ActionResult<ReadRentalCarDto> AddCar([FromBody] CreateRentalCarDto addRentalCarDto)
+        public async Task<IActionResult> AddCar([FromBody] CreateRentalCarDto addRentalCarDto)
         {
-            var rentalCar = _mapper.Map<RentalCar>(addRentalCarDto);
-
-            if (rentalCar != null)
+            var readRentalCarDto = await _carService.AddCar(addRentalCarDto);
+            if (readRentalCarDto != null)
             {
-                _repository.AddCar(rentalCar);
-                _repository.SaveChanges();
-
-                var readRentalCarDto = _mapper.Map<ReadRentalCarDto>(rentalCar);
-
                 return CreatedAtRoute(nameof(GetRentalCarById), new { Id = readRentalCarDto.Id }, readRentalCarDto);
             }
 

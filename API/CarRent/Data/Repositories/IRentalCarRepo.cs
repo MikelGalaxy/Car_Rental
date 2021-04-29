@@ -10,8 +10,8 @@ namespace CarRent.Data
     {
         Task<RentalCar> GetCarByIdAsync(int id);
         Task<IEnumerable<RentalCar>> GetCarsByBrandAsync(string brand);
-        void AddCar(RentalCar car);
-        bool SaveChanges();
+        Task AddCar(RentalCar car);
+        Task SaveChanges();
         bool UpdateCar(RentalCar car);
         void DeleteCar(RentalCar car);
     }

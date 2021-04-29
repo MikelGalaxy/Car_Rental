@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarRent.Data;
 using CarRent.Dtos;
+using CarRent.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace CarRent.Services
         public async Task<ReadRentalCarDto> GetCarById(int id)
         {
             var foundCar = await _repository.GetCarByIdAsync(id);
-            
-            if(foundCar == null)
+
+            if (foundCar == null)
             {
                 //car not found
                 _logger.LoggMessage($"Car with id: {id} was not found");
@@ -46,12 +47,31 @@ namespace CarRent.Services
             var normalizedBrand = brand.ToUpper().Trim();
             var foundCars = await _repository.GetCarsByBrandAsync(normalizedBrand);
 
-            if(foundCars == null || foundCars.Count() == 0)
+            if (foundCars == null || foundCars.Count() == 0)
             {
                 return null;
             }
 
             return _mapper.Map<IEnumerable<ReadRentalCarDto>>(foundCars);
         }
+
+        public async Task<ReadRentalCarDto> AddCar(CreateRentalCarDto car)
+        {
+            var rentalCar = _mapper.Map<RentalCar>(car);
+
+            if (rentalCar != null)
+            {
+                await _repository.AddCar(rentalCar);
+                await _repository.SaveChanges();
+
+                var readRentalCarDto = _mapper.Map<ReadRentalCarDto>(rentalCar);
+
+                return readRentalCarDto;
+            }
+
+            return null;
+        }
+
+
     }
 }
