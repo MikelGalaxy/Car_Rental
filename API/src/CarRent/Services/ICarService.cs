@@ -11,5 +11,7 @@ namespace CarRent.Services
         Task<ReadRentalCarDto> GetCarById(int id);
         Task<IEnumerable<ReadRentalCarDto>> GetCarsByBrand(string brand);
         Task<ReadRentalCarDto> AddCar(CreateRentalCarDto car);
+        Task<bool> DeleteCar(int id);
+        Task<bool> UpdateCar(int id, UpdateRentalCarDto toUpdate);
     }
 }

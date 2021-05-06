@@ -54,7 +54,7 @@ namespace CarRentTest
             //assert
             Assert.Equal(id, testCar.Id);
             Assert.Equal(brandName, testCar.Brand);
-            _logger.Verify(x => x.LoggMessage($"Car with id: {id} was found"), Times.Once);
+            _logger.Verify(x => x.LoggMessage($"Car with id: {id} was found."), Times.Once);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace CarRentTest
             var testCar = await _testService.GetCarById(id);
 
             //assert
-            _logger.Verify(x => x.LoggMessage($"Car with id: {id} was not found"), Times.Once);           
+            _logger.Verify(x => x.LoggMessage($"Car with id: {id} was not found."), Times.Once);           
         }
     }
 }

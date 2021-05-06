@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CarRent.Controllers
@@ -36,7 +37,7 @@ namespace CarRent.Controllers
 
         //GET api/v1/cars/{id}
         [HttpGet("{id}", Name = "GetRentalCarById")]
-        public async Task<IActionResult> GetRentalCarById([FromRoute] int id)
+        public async Task<IActionResult> GetRentalCarById([FromRoute] int id, CancellationToken cancellationToken)
         {
             var car = await _carService.GetCarById(id);
             return car != null ? (IActionResult)Ok(car) : NotFound();
@@ -69,25 +70,29 @@ namespace CarRent.Controllers
             return BadRequest();
         }
 
-        ////PUT api/v1/cars/{id}
-        //[HttpPut("{id}")]
-        //public ActionResult UpdateCar([FromRoute] int id, [FromBody] UpdateRentalCarDto updateRentalCarDto)
-        //{
-        //    var car = _repository.GetCarById(id);
+        //DELETE api/v1/cars/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCar([FromRoute] int id)
+        {
+            if(await _carService.DeleteCar(id))
+            {
+                return NoContent();              
+            }
 
-        //    if (car == null)
-        //    {
-        //        return NotFound();
-        //    }
+            return NotFound();
+        }
 
-        //    _mapper.Map(updateRentalCarDto, car);
+        //PUT api/v1/cars/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCar([FromRoute] int id, [FromBody] UpdateRentalCarDto updateRentalCarDto)
+        {
+            if (await _carService.UpdateCar(id, updateRentalCarDto))
+            {
+                return NoContent();
+            }
 
-        //    _repository.UpdateCar(car);
-
-        //    _repository.SaveChanges();
-
-        //    return NoContent();
-        //}
+            return NotFound();        
+        }
 
         ////PATCH api/v1/cars/{id}
         //[HttpPatch("{id}")]

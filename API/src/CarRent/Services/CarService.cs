@@ -29,11 +29,11 @@ namespace CarRent.Services
             if (foundCar == null)
             {
                 //car not found
-                _logger.LoggMessage($"Car with id: {id} was not found");
+                _logger.LoggMessage($"Car with id: {id} was not found.");
                 return null;
             }
 
-            _logger.LoggMessage($"Car with id: {id} was found");
+            _logger.LoggMessage($"Car with id: {id} was found.");
             return _mapper.Map<ReadRentalCarDto>(foundCar);
         }
 
@@ -70,6 +70,42 @@ namespace CarRent.Services
             }
 
             return null;
+        }
+
+        public async Task<bool> DeleteCar(int id)
+        {
+            var car = await _repository.GetCarByIdAsync(id);
+            if (car == null)
+            {
+                _logger.LoggMessage($"Car with id: {id} was not found. Couldn't delete.");
+                return false;
+            }
+
+            _repository.DeleteCar(car);
+            await _repository.SaveChanges();
+
+            _logger.LoggMessage($"Car with id: {id} was deleted.");
+
+            return true;
+        }
+
+        public async Task<bool> UpdateCar(int id, UpdateRentalCarDto toUpdate)
+        {
+            var foundCar = await _repository.GetCarByIdAsync(id);
+
+            if(foundCar == null)
+            {
+                _logger.LoggMessage($"Car with id: {id} was not found. Couldn't update.");
+                return false;
+            }
+
+            _mapper.Map(toUpdate, foundCar);
+            _repository.UpdateCar(foundCar);
+            await _repository.SaveChanges();
+
+            _logger.LoggMessage($"Car with id: {id} was updated.");
+
+            return true;
         }
 
 

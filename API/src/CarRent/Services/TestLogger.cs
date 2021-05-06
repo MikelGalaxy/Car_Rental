@@ -11,7 +11,7 @@ namespace CarRent.Services
     {
         private readonly ILogger _logger;
 
-        public TestLogger(ILogger logger)
+        public TestLogger(ILogger<TestLogger> logger)
         {
             _logger = logger;
         }

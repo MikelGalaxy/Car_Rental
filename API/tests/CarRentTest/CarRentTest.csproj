@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarRent\CarRent.csproj" />
+    <ProjectReference Include="..\..\src\CarRent\CarRent.csproj" />
   </ItemGroup>
 
 </Project>

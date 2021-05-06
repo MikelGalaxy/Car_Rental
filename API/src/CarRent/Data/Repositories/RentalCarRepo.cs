@@ -56,8 +56,6 @@ namespace CarRent.Data
             await _context.SaveChangesAsync();
         }
 
-        
-
         public bool UpdateCar(RentalCar car)
         {
             //EF handle it
