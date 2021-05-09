@@ -25,7 +25,7 @@ namespace CarRent
         public void ConfigureServices(IServiceCollection services)
         {
             //context for SQL SERVER provider
-            services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CarRentalConnection")));
+            services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CarRentalDocker")));
 
             services.AddControllers().AddNewtonsoftJson( n =>
             {
@@ -64,6 +64,8 @@ namespace CarRent
             {
                 endpoints.MapControllers();
             });
+
+            PrepDb.PrepPopulation(app);
 
         }
     }

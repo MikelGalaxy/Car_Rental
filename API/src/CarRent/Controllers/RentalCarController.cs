@@ -47,7 +47,7 @@ namespace CarRent.Controllers
         [HttpGet("brand/{brandName}")]
         public async Task<IActionResult> GetCarsByBrand([FromRoute] string brandName)
         {
-            var cars = await _repository.GetCarsByBrandAsync(brandName);
+            var cars = await _carService.GetCarsByBrand(brandName);
 
             if (cars != null && cars.Count() > 0)
             {

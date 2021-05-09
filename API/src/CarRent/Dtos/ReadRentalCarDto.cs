@@ -15,5 +15,6 @@ namespace CarRent.Dtos
         public int ProductionYear { get; set; }
         public string VinNumber { get; set; }
         public float BaseRentCost { get; set; }
+        public int RentalId { get; set; }
     }
 }
