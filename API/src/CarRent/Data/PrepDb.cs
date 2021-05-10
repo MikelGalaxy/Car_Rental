@@ -43,7 +43,7 @@ namespace CarRent.Data
                 Console.WriteLine("Adding data - cars - seeeding");
 
                 var retnalId = context.Rentals.FirstOrDefault();
-                var car = new RentalCar
+                var car1 = new RentalCar
                 {
                     Brand = "BMW",
                     ModelName = "M3",
@@ -55,7 +55,19 @@ namespace CarRent.Data
                     RentalId = retnalId?.Id ?? 0
                 };
 
-                context.RentalCars.Add(car);
+                var car2 = new RentalCar
+                {
+                    Brand = "FORD",
+                    ModelName = "FOCUS",
+                    EngineCapacity = 1.9f,
+                    Mileage = 127000,
+                    ProductionYear = 2006,
+                    VinNumber = "EWS42RWE321T6",
+                    BaseRentCost = 152,
+                    RentalId = retnalId?.Id ?? 0
+                };
+
+                context.RentalCars.AddRange(car1,car2);
                 context.SaveChanges();
             }
         }

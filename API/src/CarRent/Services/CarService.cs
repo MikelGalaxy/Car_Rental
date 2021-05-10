@@ -41,6 +41,7 @@ namespace CarRent.Services
         {
             if (string.IsNullOrEmpty(brand))
             {
+                _logger.LoggMessage("Can't get cars without brand name");
                 throw new ArgumentNullException(nameof(brand));
             }
 
@@ -61,7 +62,7 @@ namespace CarRent.Services
 
             if (rentalCar != null)
             {
-                await _repository.AddCar(rentalCar);
+                await _repository.AddCar(CapitalizeCarValues(rentalCar));
                 await _repository.SaveChanges();
 
                 var readRentalCarDto = _mapper.Map<ReadRentalCarDto>(rentalCar);
@@ -106,6 +107,22 @@ namespace CarRent.Services
             _logger.LoggMessage($"Car with id: {id} was updated.");
 
             return true;
+        }
+
+        private RentalCar CapitalizeCarValues(RentalCar car)
+        {
+            if(car == null)
+            {
+                var ex = new ArgumentNullException(nameof(car));
+                _logger.LoggMessage("Can't capitalize null car", ex);
+                throw ex;
+            }
+
+            car.Brand = car.Brand?.ToUpper().Trim();
+            car.ModelName = car.ModelName?.ToUpper().Trim();
+            car.VinNumber = car.VinNumber?.ToUpper().Trim();
+
+            return car;
         }
 
 

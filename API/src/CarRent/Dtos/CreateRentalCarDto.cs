@@ -22,5 +22,7 @@ namespace CarRent.Dtos
         public string VinNumber { get; set; }
         [Required]
         public float BaseRentCost { get; set; }
+        [Required]
+        public int RentalId { get; set; }
     }
 }
