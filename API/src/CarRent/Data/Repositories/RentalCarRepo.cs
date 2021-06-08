@@ -1,7 +1,10 @@
 ﻿using CarRent.Models;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,7 +51,15 @@ namespace CarRent.Data
                 throw new ArgumentNullException(nameof(brand));
             }
 
-            return await _context.RentalCars.Where(c => c.Brand.Equals(brand)).ToListAsync();
+            using (IDbConnection connection = new SqlConnection(Startup.ConnectionString))
+            {
+                if(connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                return await connection.QueryAsync<RentalCar>($"select * from RentalCars where Brand = '{brand}'");
+            }
         }
 
         public async Task SaveChanges()

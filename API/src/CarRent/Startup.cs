@@ -14,6 +14,7 @@ namespace CarRent
 {
     public class Startup
     {
+        public static string ConnectionString { get; private set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,8 +25,9 @@ namespace CarRent
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConnectionString = Configuration.GetConnectionString("CarRentalDocker");
             //context for SQL SERVER provider
-            services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CarRentalDocker")));
+            services.AddDbContext<RentalCarsContext>(opt => opt.UseSqlServer(ConnectionString));
 
             services.AddControllers().AddNewtonsoftJson( n =>
             {
@@ -33,7 +35,6 @@ namespace CarRent
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddScoped<IRentalCarRepo, RentalCarRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
             services.AddScoped<ICarService, CarService>();

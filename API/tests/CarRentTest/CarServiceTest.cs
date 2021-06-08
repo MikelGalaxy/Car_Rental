@@ -38,7 +38,7 @@ namespace CarRentTest
                 Brand = brandName,
                 ModelName = "M3",
                 EngineCapacity = 2.5f,
-                Mileage = 167000,
+                Mileage = 167_000,
                 ProductionYear = 2004,
                 VinNumber = "EAS42RWE32123",
                 BaseRentCost = 256,
