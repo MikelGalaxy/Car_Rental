@@ -8,6 +8,7 @@ namespace CarRent.Services
 {
     public interface ICarService
     {
+        Task<IEnumerable<ReadRentalCarDto>> GetCars(int page, int pageSize);
         Task<ReadRentalCarDto> GetCarById(int id);
         Task<IEnumerable<ReadRentalCarDto>> GetCarsByBrand(string brand);
         Task<ReadRentalCarDto> AddCar(CreateRentalCarDto car);

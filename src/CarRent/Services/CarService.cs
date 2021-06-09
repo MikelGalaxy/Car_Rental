@@ -22,6 +22,18 @@ namespace CarRent.Services
             _logger = logger;
         }
 
+        public async Task<IEnumerable<ReadRentalCarDto>> GetCars(int page,int pageSize)
+        {
+            var cars = await _repository.GetCars(page,pageSize);
+
+            if (cars == null || cars.Count() == 0)
+            {
+                return null;
+            }
+
+            return _mapper.Map<IEnumerable<ReadRentalCarDto>>(cars);
+        }
+
         public async Task<ReadRentalCarDto> GetCarById(int id)
         {
             var foundCar = await _repository.GetCarByIdAsync(id);

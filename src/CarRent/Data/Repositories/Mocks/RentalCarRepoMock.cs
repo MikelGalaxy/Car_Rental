@@ -50,5 +50,10 @@ namespace CarRent.Data
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<RentalCar>> GetCars(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -19,24 +19,21 @@ namespace CarRent.Data
             _context = context;
         }
 
-        public async Task AddCar(RentalCar car)
+        public async Task<IEnumerable<RentalCar>> GetCars(int page, int pageSize)
         {
-            if (car == null)
+            using (IDbConnection connection = new SqlConnection(Startup.ConnectionString))
             {
-                throw new ArgumentNullException(nameof(car));
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                int offset = (page - 1) * pageSize;
+
+                return await connection
+                    .QueryAsync<RentalCar>($"select * from RentalCars" +
+                    $" order by Id offset {offset} rows fetch next {pageSize} rows only");
             }
-
-            await _context.RentalCars.AddAsync(car);
-        }
-
-        public void DeleteCar(RentalCar car)
-        {
-            if(car == null)
-            {
-                throw new ArgumentNullException(nameof(car));
-            }
-
-            _context.RentalCars.Remove(car);
         }
 
         public async Task<RentalCar> GetCarByIdAsync(int id)
@@ -61,6 +58,26 @@ namespace CarRent.Data
                 return await connection.QueryAsync<RentalCar>($"select * from RentalCars where Brand = '{brand}'");
             }
         }
+        public async Task AddCar(RentalCar car)
+        {
+            if (car == null)
+            {
+                throw new ArgumentNullException(nameof(car));
+            }
+
+            await _context.RentalCars.AddAsync(car);
+        }
+
+        public void DeleteCar(RentalCar car)
+        {
+            if(car == null)
+            {
+                throw new ArgumentNullException(nameof(car));
+            }
+
+            _context.RentalCars.Remove(car);
+        }
+
 
         public async Task SaveChanges()
         {

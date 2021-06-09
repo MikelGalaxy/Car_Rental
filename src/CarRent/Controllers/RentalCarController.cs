@@ -35,9 +35,27 @@ namespace CarRent.Controllers
             return Ok("Testo");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCars([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        {
+            if (page <= 0)
+            {
+                return BadRequest();
+            }
+
+            var cars = await _carService.GetCars(page, pageSize);
+
+            if (cars != null && cars.Count() > 0)
+            {
+                return Ok(cars);
+            }
+
+            return cars != null && cars.Count() > 0 ? (IActionResult)Ok(cars) : NotFound();
+        }
+
         //GET api/v1/cars/{id}
         [HttpGet("{id}", Name = "GetRentalCarById")]
-        public async Task<IActionResult> GetRentalCarById([FromRoute] int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetRentalCarById([FromRoute] int id)
         {
             var car = await _carService.GetCarById(id);
             return car != null ? (IActionResult)Ok(car) : NotFound();
@@ -74,9 +92,9 @@ namespace CarRent.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCar([FromRoute] int id)
         {
-            if(await _carService.DeleteCar(id))
+            if (await _carService.DeleteCar(id))
             {
-                return NoContent();              
+                return NoContent();
             }
 
             return NotFound();
@@ -91,7 +109,7 @@ namespace CarRent.Controllers
                 return NoContent();
             }
 
-            return NotFound();        
+            return NotFound();
         }
 
         ////PATCH api/v1/cars/{id}
